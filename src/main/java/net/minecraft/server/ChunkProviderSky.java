@@ -15,9 +15,6 @@ public class ChunkProviderSky implements IChunkProvider {
     public NoiseGeneratorOctaves c;
     private World p;
     private double[] q;
-    private double[] r = new double[256];
-    private double[] s = new double[256];
-    private double[] t = new double[256];
     private MapGenBase u = new MapGenCaves();
     private BiomeBase[] v;
     double[] d;
@@ -105,20 +102,18 @@ public class ChunkProviderSky implements IChunkProvider {
     public void a(int i, int j, byte[] abyte, BiomeBase[] abiomebase) {
         double d0 = 0.03125D;
 
-        this.r = this.n.a(this.r, (double) (i * 16), (double) (j * 16), 0.0D, 16, 16, 1, d0, d0, 1.0D);
-        this.s = this.n.a(this.s, (double) (i * 16), 109.0134D, (double) (j * 16), 16, 1, 16, d0, 1.0D, d0);
-        this.t = this.o.a(this.t, (double) (i * 16), (double) (j * 16), 0.0D, 16, 16, 1, d0 * 2.0D, d0 * 2.0D, d0 * 2.0D);
-
         for (int k = 0; k < 16; ++k) {
             for (int l = 0; l < 16; ++l) {
                 BiomeBase biomebase = abiomebase[k + l * 16];
-                int i1 = (int) (this.t[k + l * 16] / 3.0D + 3.0D + this.j.nextDouble() * 0.25D);
+                double dd2 = (i << 4) + k;
+                double dd4 = (j << 4) + l;
+                int i1 = (int) (this.o.a(dd2 * d0 * 2.0D, dd4 * d0 * 2.0D) / 3.0D + 3.0D + this.j.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte b0 = biomebase.p;
                 byte b1 = biomebase.q;
 
                 for (int k1 = 127; k1 >= 0; --k1) {
-                    int l1 = (l * 16 + k) * 128 + k1;
+                    int l1 = (k * 16 + l) * 128 + k1;
                     byte b2 = abyte[l1];
 
                     if (b2 == 0) {

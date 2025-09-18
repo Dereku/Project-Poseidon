@@ -14,9 +14,6 @@ public class ChunkProviderHell implements IChunkProvider {
     public NoiseGeneratorOctaves b;
     private World n;
     private double[] o;
-    private double[] p = new double[256];
-    private double[] q = new double[256];
-    private double[] r = new double[256];
     private MapGenBase s = new MapGenCavesHell();
     double[] c;
     double[] d;
@@ -106,21 +103,19 @@ public class ChunkProviderHell implements IChunkProvider {
         byte b0 = 64;
         double d0 = 0.03125D;
 
-        this.p = this.l.a(this.p, (double) (i * 16), (double) (j * 16), 0.0D, 16, 16, 1, d0, d0, 1.0D);
-        this.q = this.l.a(this.q, (double) (i * 16), 109.0134D, (double) (j * 16), 16, 1, 16, d0, 1.0D, d0);
-        this.r = this.m.a(this.r, (double) (i * 16), (double) (j * 16), 0.0D, 16, 16, 1, d0 * 2.0D, d0 * 2.0D, d0 * 2.0D);
-
         for (int k = 0; k < 16; ++k) {
             for (int l = 0; l < 16; ++l) {
-                boolean flag = this.p[k + l * 16] + this.h.nextDouble() * 0.2D > 0.0D;
-                boolean flag1 = this.q[k + l * 16] + this.h.nextDouble() * 0.2D > 0.0D;
-                int i1 = (int) (this.r[k + l * 16] / 3.0D + 3.0D + this.h.nextDouble() * 0.25D);
+                double dd2 = (i << 4) + k;
+                double dd4 = (j << 4) + l;
+                boolean flag = this.l.a(dd2 * d0, dd4 * d0, 0.0D) + this.h.nextDouble() * 0.2D > 0.0D;
+                boolean flag1 = this.l.a(dd4 * d0, d0, dd2 * d0) + this.h.nextDouble() * 0.2D > 0.0D;
+                int i1 = (int) (this.m.a(dd2 * d0 * 2.0D, dd4 * d0 * 2.0D) / 3.0D + 3.0D + this.h.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte b1 = (byte) Block.NETHERRACK.id;
                 byte b2 = (byte) Block.NETHERRACK.id;
 
                 for (int k1 = 127; k1 >= 0; --k1) {
-                    int l1 = (l * 16 + k) * 128 + k1;
+                    int l1 = (k * 16 + l) * 128 + k1;
 
                     if (k1 >= 127 - this.h.nextInt(5)) {
                         abyte[l1] = (byte) Block.BEDROCK.id;
