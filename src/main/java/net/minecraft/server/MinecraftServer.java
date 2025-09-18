@@ -282,7 +282,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
             // if (l == 0 || this.propertyManager.getBoolean("allow-nether", true)) {
             WorldServer worldserver = this.worlds.get(l);
             // Poseidon start
-            String seedText = worldserver.getSeed() + (worldserver.getSeed() != worldserver.getSeed() ? ", Ores Seed: " + worldserver.getOresSeed() : "");
+            String seedText = worldserver.getSeed() + (worldserver.getSeed() != worldserver.getOresSeed() ? ", Ores Seed: " + worldserver.getOresSeed() : "");
             log.info("Preparing start region for level " + l + " (Seed: " + seedText + ")");
             // Poseidon end
             if (worldserver.getWorld().getKeepSpawnInMemory()) {

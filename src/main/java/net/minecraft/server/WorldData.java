@@ -46,21 +46,24 @@ public class WorldData {
         }
     }
 
+    // Poseidon start
     public WorldData(long i, String s) {
         this.a = i;
         this.oresSeed = i;
         this.name = s;
     }
 
-    public WorldData(long i, long mineablesSeed, String s) {
+    // Poseidon: New constructor for the 2nd seed
+    public WorldData(long i, long oresSeed, String s) {
         this.a = i;
-        this.oresSeed = mineablesSeed;
+        this.oresSeed = oresSeed;
         this.name = s;
     }
+    // Poseidon end
 
     public WorldData(WorldData worlddata) {
         this.a = worlddata.a;
-        this.oresSeed = worlddata.oresSeed;
+        this.oresSeed = worlddata.oresSeed; // Poseidon
         this.b = worlddata.b;
         this.c = worlddata.c;
         this.d = worlddata.d;
