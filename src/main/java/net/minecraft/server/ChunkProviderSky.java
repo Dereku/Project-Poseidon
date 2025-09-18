@@ -289,6 +289,17 @@ public class ChunkProviderSky implements IChunkProvider {
         long j1 = this.j.nextLong() / 2L * 2L + 1L;
 
         this.j.setSeed((long) i * i1 + (long) j * j1 ^ this.p.getSeed());
+        // Poseidon start
+        final Random oresSeed;
+        if (this.p.getSeed() != this.p.getOresSeed()) {
+            oresSeed = new Random(this.p.getOresSeed());
+            i1 = oresSeed.nextLong() / 2L * 2L + 1L;
+            j1 = oresSeed.nextLong() / 2L * 2L + 1L;
+            oresSeed.setSeed((long) i * i1 + (long) j * j1 ^ this.p.getOresSeed());
+        } else {
+            oresSeed = this.j;
+        }
+        // Poseidon end
         double d0 = 0.25D;
         int k1;
         int l1;
@@ -312,75 +323,77 @@ public class ChunkProviderSky implements IChunkProvider {
 
         int j2;
 
+        // Poseidon start: 'this.j' -> 'oresSeed'
         for (k1 = 0; k1 < 8; ++k1) {
-            l1 = k + this.j.nextInt(16) + 8;
-            i2 = this.j.nextInt(128);
-            j2 = l + this.j.nextInt(16) + 8;
-            (new WorldGenDungeons()).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16) + 8;
+            i2 = oresSeed.nextInt(128);
+            j2 = l + oresSeed.nextInt(16) + 8;
+            (new WorldGenDungeons()).a(this.p, oresSeed, l1, i2, j2);
         }
 
         for (k1 = 0; k1 < 10; ++k1) {
-            l1 = k + this.j.nextInt(16);
-            i2 = this.j.nextInt(128);
-            j2 = l + this.j.nextInt(16);
-            (new WorldGenClay(32)).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16);
+            i2 = oresSeed.nextInt(128);
+            j2 = l + oresSeed.nextInt(16);
+            (new WorldGenClay(32)).a(this.p, oresSeed, l1, i2, j2);
         }
 
         for (k1 = 0; k1 < 20; ++k1) {
-            l1 = k + this.j.nextInt(16);
-            i2 = this.j.nextInt(128);
-            j2 = l + this.j.nextInt(16);
-            (new WorldGenMinable(Block.DIRT.id, 32)).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16);
+            i2 = oresSeed.nextInt(128);
+            j2 = l + oresSeed.nextInt(16);
+            (new WorldGenMinable(Block.DIRT.id, 32)).a(this.p, oresSeed, l1, i2, j2);
         }
 
         for (k1 = 0; k1 < 10; ++k1) {
-            l1 = k + this.j.nextInt(16);
-            i2 = this.j.nextInt(128);
-            j2 = l + this.j.nextInt(16);
-            (new WorldGenMinable(Block.GRAVEL.id, 32)).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16);
+            i2 = oresSeed.nextInt(128);
+            j2 = l + oresSeed.nextInt(16);
+            (new WorldGenMinable(Block.GRAVEL.id, 32)).a(this.p, oresSeed, l1, i2, j2);
         }
 
         for (k1 = 0; k1 < 20; ++k1) {
-            l1 = k + this.j.nextInt(16);
-            i2 = this.j.nextInt(128);
-            j2 = l + this.j.nextInt(16);
-            (new WorldGenMinable(Block.COAL_ORE.id, 16)).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16);
+            i2 = oresSeed.nextInt(128);
+            j2 = l + oresSeed.nextInt(16);
+            (new WorldGenMinable(Block.COAL_ORE.id, 16)).a(this.p, oresSeed, l1, i2, j2);
         }
 
         for (k1 = 0; k1 < 20; ++k1) {
-            l1 = k + this.j.nextInt(16);
-            i2 = this.j.nextInt(64);
-            j2 = l + this.j.nextInt(16);
-            (new WorldGenMinable(Block.IRON_ORE.id, 8)).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16);
+            i2 = oresSeed.nextInt(64);
+            j2 = l + oresSeed.nextInt(16);
+            (new WorldGenMinable(Block.IRON_ORE.id, 8)).a(this.p, oresSeed, l1, i2, j2);
         }
 
         for (k1 = 0; k1 < 2; ++k1) {
-            l1 = k + this.j.nextInt(16);
-            i2 = this.j.nextInt(32);
-            j2 = l + this.j.nextInt(16);
-            (new WorldGenMinable(Block.GOLD_ORE.id, 8)).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16);
+            i2 = oresSeed.nextInt(32);
+            j2 = l + oresSeed.nextInt(16);
+            (new WorldGenMinable(Block.GOLD_ORE.id, 8)).a(this.p, oresSeed, l1, i2, j2);
         }
 
         for (k1 = 0; k1 < 8; ++k1) {
-            l1 = k + this.j.nextInt(16);
-            i2 = this.j.nextInt(16);
-            j2 = l + this.j.nextInt(16);
-            (new WorldGenMinable(Block.REDSTONE_ORE.id, 7)).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16);
+            i2 = oresSeed.nextInt(16);
+            j2 = l + oresSeed.nextInt(16);
+            (new WorldGenMinable(Block.REDSTONE_ORE.id, 7)).a(this.p, oresSeed, l1, i2, j2);
         }
 
         for (k1 = 0; k1 < 1; ++k1) {
-            l1 = k + this.j.nextInt(16);
-            i2 = this.j.nextInt(16);
-            j2 = l + this.j.nextInt(16);
-            (new WorldGenMinable(Block.DIAMOND_ORE.id, 7)).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16);
+            i2 = oresSeed.nextInt(16);
+            j2 = l + oresSeed.nextInt(16);
+            (new WorldGenMinable(Block.DIAMOND_ORE.id, 7)).a(this.p, oresSeed, l1, i2, j2);
         }
 
         for (k1 = 0; k1 < 1; ++k1) {
-            l1 = k + this.j.nextInt(16);
-            i2 = this.j.nextInt(16) + this.j.nextInt(16);
-            j2 = l + this.j.nextInt(16);
-            (new WorldGenMinable(Block.LAPIS_ORE.id, 6)).a(this.p, this.j, l1, i2, j2);
+            l1 = k + oresSeed.nextInt(16);
+            i2 = oresSeed.nextInt(16) + oresSeed.nextInt(16);
+            j2 = l + oresSeed.nextInt(16);
+            (new WorldGenMinable(Block.LAPIS_ORE.id, 6)).a(this.p, oresSeed, l1, i2, j2);
         }
+        // Poseidon end: 'this.j' -> 'oresSeed'
 
         d0 = 0.5D;
         k1 = (int) ((this.c.a((double) k * d0, (double) l * d0) / 8.0D + this.j.nextDouble() * 4.0D + 4.0D) / 3.0D);

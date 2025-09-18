@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
@@ -130,7 +131,22 @@ public class World implements IBlockAccess {
         boolean flag = false;
 
         if (this.worldData == null) {
+            // Poseidon Ores seed start
+            if (PoseidonConfig.getInstance().getConfigBoolean("world.settings.ores-seed.enable", false)) {
+                final String seed = PoseidonConfig.getInstance().getConfigString("world.settings.ores-seed.value");
+                long oresSeed = new Random().nextLong();
+                if (!seed.isEmpty()) {
+                    try {
+                        oresSeed = Long.parseLong(seed);
+                    } catch (NumberFormatException numberformatexception) {
+                        oresSeed = seed.hashCode();
+                    }
+                }
+                this.worldData = new WorldData(i, oresSeed, s);
+            } else {
             this.worldData = new WorldData(i, s);
+            }
+            // Poseidon Ores seed end
             flag = true;
         } else {
             this.worldData.a(s);
@@ -2297,6 +2313,12 @@ public class World implements IBlockAccess {
     public long getSeed() {
         return this.worldData.getSeed();
     }
+
+    // Poseidon start
+    public long getOresSeed() {
+        return this.worldData.getOresSeed();
+    }
+    // Poseidon end
 
     public long getTime() {
         return this.worldData.f();

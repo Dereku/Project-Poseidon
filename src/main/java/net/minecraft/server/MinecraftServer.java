@@ -281,7 +281,10 @@ public class MinecraftServer implements Runnable, ICommandListener {
         for (int l = 0; l < this.worlds.size(); ++l) {
             // if (l == 0 || this.propertyManager.getBoolean("allow-nether", true)) {
             WorldServer worldserver = this.worlds.get(l);
-            log.info("Preparing start region for level " + l + " (Seed: " + worldserver.getSeed() + ")");
+            // Poseidon start
+            String seedText = worldserver.getSeed() + (worldserver.getSeed() != worldserver.getSeed() ? ", Ores Seed: " + worldserver.getOresSeed() : "");
+            log.info("Preparing start region for level " + l + " (Seed: " + seedText + ")");
+            // Poseidon end
             if (worldserver.getWorld().getKeepSpawnInMemory()) {
                 // CraftBukkit end
                 ChunkCoordinates chunkcoordinates = worldserver.getSpawn();

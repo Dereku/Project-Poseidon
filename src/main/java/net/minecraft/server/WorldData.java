@@ -5,6 +5,7 @@ import java.util.List;
 public class WorldData {
 
     private long a;
+    private long oresSeed; // Poseidon
     private int b;
     private int c;
     private int d;
@@ -24,6 +25,7 @@ public class WorldData {
 
     public WorldData(NBTTagCompound nbttagcompound) {
         this.a = nbttagcompound.getLong("RandomSeed");
+        this.oresSeed = nbttagcompound.getLong("OresSeed"); // Poseidon
         this.b = nbttagcompound.e("SpawnX");
         this.c = nbttagcompound.e("SpawnY");
         this.d = nbttagcompound.e("SpawnZ");
@@ -46,11 +48,19 @@ public class WorldData {
 
     public WorldData(long i, String s) {
         this.a = i;
+        this.oresSeed = i;
+        this.name = s;
+    }
+
+    public WorldData(long i, long mineablesSeed, String s) {
+        this.a = i;
+        this.oresSeed = mineablesSeed;
         this.name = s;
     }
 
     public WorldData(WorldData worlddata) {
         this.a = worlddata.a;
+        this.oresSeed = worlddata.oresSeed;
         this.b = worlddata.b;
         this.c = worlddata.c;
         this.d = worlddata.d;
@@ -96,6 +106,7 @@ public class WorldData {
 
     private void a(NBTTagCompound nbttagcompound, NBTTagCompound nbttagcompound1) {
         nbttagcompound.setLong("RandomSeed", this.a);
+        nbttagcompound.setLong("OresSeed", this.oresSeed); // Poseidon
         nbttagcompound.a("SpawnX", this.b);
         nbttagcompound.a("SpawnY", this.c);
         nbttagcompound.a("SpawnZ", this.d);
@@ -138,6 +149,10 @@ public class WorldData {
 
     public float getPitch() {
         return this.pitch;
+    }
+
+    public long getOresSeed() {
+        return this.oresSeed;
     }
 
     // Poseidon end
