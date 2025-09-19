@@ -128,7 +128,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
                 decorationX *= d0;
                 BiomeBase biomebase = abiomebase[k + l * 16];
                 boolean flag =  this.n.a(decorationX, decorationZ, 0.0D) + this.j.nextDouble() * 0.2D > 0.0D;
-                boolean flag1 = this.gravelNoise[l + k * 16] + this.j.nextDouble() * 0.2D > 3.0D;
+                boolean flag1 = this.gravelNoise[k + l * 16] + this.j.nextDouble() * 0.2D > 3.0D;
                 int i1 = (int) (this.o.a(surfaceX, surfaceZ) / 3.0D + 3.0D + this.j.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte b1 = biomebase.p;
