@@ -15,6 +15,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
     public NoiseGeneratorOctaves c;
     private World p;
     private double[] q;
+    private double[] gravelNoise = new double[256];
     private MapGenBase u = new MapGenCaves();
     private BiomeBase[] v;
     double[] d;
@@ -114,7 +115,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
         double surfaceScale = d0 * 2.0D;
         double startX = i * 16D;
         double startZ = j * 16D;
-        this.q = this.n.a(this.q, startX, 109.0134D, startZ, 16, 1, 16, d0, 1.0D, d0);
+        this.gravelNoise = this.n.a(this.gravelNoise, startX, 109.0134D, startZ, 16, 1, 16, d0, 1.0D, d0);
 
         for (int k = 0; k < 16; ++k) {
             double decorationZ = startZ + (double) k;
@@ -127,7 +128,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
                 decorationX *= d0;
                 BiomeBase biomebase = abiomebase[k + l * 16];
                 boolean flag =  this.n.a(decorationX, decorationZ, 0.0D) + this.j.nextDouble() * 0.2D > 0.0D;
-                boolean flag1 = this.q[k + l * 16] + this.j.nextDouble() * 0.2D > 3.0D;
+                boolean flag1 = this.gravelNoise[l + k * 16] + this.j.nextDouble() * 0.2D > 3.0D;
                 int i1 = (int) (this.o.a(surfaceX, surfaceZ) / 3.0D + 3.0D + this.j.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte b1 = biomebase.p;
