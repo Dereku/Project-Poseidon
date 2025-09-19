@@ -6,19 +6,22 @@ public class MapGenBase {
 
     protected int a = 8;
     protected Random b = new Random();
+    protected World worldObj;
 
     public MapGenBase() {}
 
     public void a(IChunkProvider ichunkprovider, World world, int i, int j, byte[] abyte) {
         int k = this.a;
-
+        this.worldObj = world;
         this.b.setSeed(world.getCavesSeed()); // Poseidon 'getSeed()' -> 'getCavesSeed()'
-        long l = this.b.nextLong() / 2L * 2L + 1L;
-        long i1 = this.b.nextLong() / 2L * 2L + 1L;
+        long l = this.b.nextLong();
+        long i1 = this.b.nextLong();
 
         for (int j1 = i - k; j1 <= i + k; ++j1) {
             for (int k1 = j - k; k1 <= j + k; ++k1) {
-                this.b.setSeed((long) j1 * l + (long) k1 * i1 ^ world.getCavesSeed()); // Poseidon 'getSeed()' -> 'getCavesSeed()'
+                long sx = (long) j1 * l;
+                long sz = (long) k1 * i1;
+                this.b.setSeed(sx ^ sz ^ world.getCavesSeed()); // Poseidon 'getSeed()' -> 'getCavesSeed()'
                 this.a(world, j1, k1, i, j, abyte);
             }
         }

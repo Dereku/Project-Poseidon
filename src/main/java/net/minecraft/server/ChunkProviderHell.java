@@ -18,8 +18,7 @@ public class ChunkProviderHell implements IChunkProvider {
     double[] c;
     double[] d;
     double[] e;
-    double[] f;
-    double[] g;
+    private double[] q = new double[256];
 
     public ChunkProviderHell(World world, long i) {
         this.n = world;
@@ -103,13 +102,23 @@ public class ChunkProviderHell implements IChunkProvider {
         byte b0 = 64;
         double d0 = 0.03125D;
 
+        double surfaceScale = d0 * 2.0D;
+        double startX = i * 16.0D;
+        double startZ = j * 16.0D;
+        this.q = this.l.a(this.q, startX, 109.0134D, startZ, 16, 1, 16, d0, 1.0D, d0);
+
         for (int k = 0; k < 16; ++k) {
+            double decorationZ = startZ + (double) k;
+            double surfaceZ = decorationZ * surfaceScale;
+            decorationZ *= d0;
+
             for (int l = 0; l < 16; ++l) {
-                double dd2 = (i << 4) + k;
-                double dd4 = (j << 4) + l;
-                boolean flag = this.l.a(dd2 * d0, dd4 * d0, 0.0D) + this.h.nextDouble() * 0.2D > 0.0D;
-                boolean flag1 = this.l.a(dd4 * d0, d0, dd2 * d0) + this.h.nextDouble() * 0.2D > 0.0D;
-                int i1 = (int) (this.m.a(dd2 * d0 * 2.0D, dd4 * d0 * 2.0D) / 3.0D + 3.0D + this.h.nextDouble() * 0.25D);
+                double decorationX = startX + (double) l;
+                double surfaceX = decorationX * surfaceScale;
+                decorationX *= d0;
+                boolean flag = this.l.a(decorationX, decorationZ, 0.0D) + this.h.nextDouble() * 0.2D > 0.0D;
+                boolean flag1 = this.q[k + l * 16] + this.h.nextDouble() * 0.2D > 0.0D;
+                int i1 = (int) (this.m.a(surfaceX, surfaceZ) / 3.0D + 3.0D + this.h.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte b1 = (byte) Block.NETHERRACK.id;
                 byte b2 = (byte) Block.NETHERRACK.id;
@@ -117,9 +126,7 @@ public class ChunkProviderHell implements IChunkProvider {
                 for (int k1 = 127; k1 >= 0; --k1) {
                     int l1 = (k * 16 + l) * 128 + k1;
 
-                    if (k1 >= 127 - this.h.nextInt(5)) {
-                        abyte[l1] = (byte) Block.BEDROCK.id;
-                    } else if (k1 <= 0 + this.h.nextInt(5)) {
+                    if (k1 >= 127 - this.h.nextInt(5) || k1 <= 0 + this.h.nextInt(5)) {
                         abyte[l1] = (byte) Block.BEDROCK.id;
                     } else {
                         byte b3 = abyte[l1];
@@ -138,15 +145,8 @@ public class ChunkProviderHell implements IChunkProvider {
                                         b1 = (byte) Block.GRAVEL.id;
                                     }
 
-                                    if (flag1) {
-                                        b2 = (byte) Block.NETHERRACK.id;
-                                    }
-
                                     if (flag) {
                                         b1 = (byte) Block.SOUL_SAND.id;
-                                    }
-
-                                    if (flag) {
                                         b2 = (byte) Block.SOUL_SAND.id;
                                     }
                                 }
@@ -195,14 +195,10 @@ public class ChunkProviderHell implements IChunkProvider {
 
         double d0 = 684.412D;
         double d1 = 2053.236D;
-
-        this.f = this.a.a(this.f, (double) i, (double) j, (double) k, l, 1, j1, 1.0D, 0.0D, 1.0D);
-        this.g = this.b.a(this.g, (double) i, (double) j, (double) k, l, 1, j1, 100.0D, 0.0D, 100.0D);
         this.c = this.k.a(this.c, (double) i, (double) j, (double) k, l, i1, j1, d0 / 80.0D, d1 / 60.0D, d0 / 80.0D);
         this.d = this.i.a(this.d, (double) i, (double) j, (double) k, l, i1, j1, d0, d1, d0);
         this.e = this.j.a(this.e, (double) i, (double) j, (double) k, l, i1, j1, d0, d1, d0);
         int k1 = 0;
-        int l1 = 0;
         double[] adouble1 = new double[i1];
 
         int i2;
@@ -223,41 +219,6 @@ public class ChunkProviderHell implements IChunkProvider {
 
         for (i2 = 0; i2 < l; ++i2) {
             for (int j2 = 0; j2 < j1; ++j2) {
-                double d3 = (this.f[l1] + 256.0D) / 512.0D;
-
-                if (d3 > 1.0D) {
-                    d3 = 1.0D;
-                }
-
-                double d4 = 0.0D;
-                double d5 = this.g[l1] / 8000.0D;
-
-                if (d5 < 0.0D) {
-                    d5 = -d5;
-                }
-
-                d5 = d5 * 3.0D - 3.0D;
-                if (d5 < 0.0D) {
-                    d5 /= 2.0D;
-                    if (d5 < -1.0D) {
-                        d5 = -1.0D;
-                    }
-
-                    d5 /= 1.4D;
-                    d5 /= 2.0D;
-                    d3 = 0.0D;
-                } else {
-                    if (d5 > 1.0D) {
-                        d5 = 1.0D;
-                    }
-
-                    d5 /= 6.0D;
-                }
-
-                d3 += 0.5D;
-                d5 = d5 * (double) i1 / 16.0D;
-                ++l1;
-
                 for (int k2 = 0; k2 < i1; ++k2) {
                     double d6 = 0.0D;
                     double d7 = adouble1[k2];
@@ -278,19 +239,6 @@ public class ChunkProviderHell implements IChunkProvider {
 
                     if (k2 > i1 - 4) {
                         d11 = (double) ((float) (k2 - (i1 - 4)) / 3.0F);
-                        d6 = d6 * (1.0D - d11) + -10.0D * d11;
-                    }
-
-                    if ((double) k2 < d4) {
-                        d11 = (d4 - (double) k2) / 4.0D;
-                        if (d11 < 0.0D) {
-                            d11 = 0.0D;
-                        }
-
-                        if (d11 > 1.0D) {
-                            d11 = 1.0D;
-                        }
-
                         d6 = d6 * (1.0D - d11) + -10.0D * d11;
                     }
 

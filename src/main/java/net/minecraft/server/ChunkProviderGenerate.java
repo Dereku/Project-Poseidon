@@ -22,7 +22,6 @@ public class ChunkProviderGenerate implements IChunkProvider {
     double[] f;
     double[] g;
     double[] h;
-    int[][] i = new int[32][32];
     private double[] w;
 
     public ChunkProviderGenerate(World world, long i) {
@@ -112,15 +111,24 @@ public class ChunkProviderGenerate implements IChunkProvider {
     public void a(int i, int j, byte[] abyte, BiomeBase[] abiomebase) {
         byte b0 = 64;
         double d0 = 0.03125D;
+        double surfaceScale = d0 * 2.0D;
+        double startX = i * 16D;
+        double startZ = j * 16D;
+        this.q = this.n.a(this.q, startX, 109.0134D, startZ, 16, 1, 16, d0, 1.0D, d0);
 
         for (int k = 0; k < 16; ++k) {
+            double decorationZ = startZ + (double) k;
+            double surfaceZ = decorationZ * surfaceScale;
+            decorationZ *= d0;
+
             for (int l = 0; l < 16; ++l) {
+                double decorationX = startX + (double) l;
+                double surfaceX = decorationX * surfaceScale;
+                decorationX *= d0;
                 BiomeBase biomebase = abiomebase[k + l * 16];
-                double dd2 = (i << 4) + k;
-                double dd4 = (j << 4) + l;
-                boolean flag =  this.n.a(dd2 * d0, dd4 * d0, 0.0D) + this.j.nextDouble() * 0.2D > 0.0D;
-                boolean flag1 = this.n.a(dd4 * d0, d0, dd2 * d0) + this.j.nextDouble() * 0.2D > 3.0D;
-                int i1 = (int) (this.o.a(dd2 * d0 * 2.0D, dd4 * d0 * 2.0D) / 3.0D + 3.0D + this.j.nextDouble() * 0.25D);
+                boolean flag =  this.n.a(decorationX, decorationZ, 0.0D) + this.j.nextDouble() * 0.2D > 0.0D;
+                boolean flag1 = this.q[k + l * 16] + this.j.nextDouble() * 0.2D > 3.0D;
+                int i1 = (int) (this.o.a(surfaceX, surfaceZ) / 3.0D + 3.0D + this.j.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte b1 = biomebase.p;
                 byte b2 = biomebase.q;
@@ -145,17 +153,11 @@ public class ChunkProviderGenerate implements IChunkProvider {
                                     b2 = biomebase.q;
                                     if (flag1) {
                                         b1 = 0;
-                                    }
-
-                                    if (flag1) {
                                         b2 = (byte) Block.GRAVEL.id;
                                     }
 
                                     if (flag) {
                                         b1 = (byte) Block.SAND.id;
-                                    }
-
-                                    if (flag) {
                                         b2 = (byte) Block.SAND.id;
                                     }
                                 }

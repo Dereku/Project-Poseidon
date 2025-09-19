@@ -20,9 +20,6 @@ public class ChunkProviderSky implements IChunkProvider {
     double[] d;
     double[] e;
     double[] f;
-    double[] g;
-    double[] h;
-    int[][] i = new int[32][32];
     private double[] w;
 
     public ChunkProviderSky(World world, long i) {
@@ -101,13 +98,17 @@ public class ChunkProviderSky implements IChunkProvider {
 
     public void a(int i, int j, byte[] abyte, BiomeBase[] abiomebase) {
         double d0 = 0.03125D;
+        double surfaceScale = d0 * 2.0D;
+        double startX = i * 16D;
+        double startZ = j * 16D;
 
         for (int k = 0; k < 16; ++k) {
+            double surfaceZ = (startZ + (double) k) * surfaceScale;
+
             for (int l = 0; l < 16; ++l) {
+                double surfaceX = (startX + (double) l) * surfaceScale;
                 BiomeBase biomebase = abiomebase[k + l * 16];
-                double dd2 = (i << 4) + k;
-                double dd4 = (j << 4) + l;
-                int i1 = (int) (this.o.a(dd2 * d0 * 2.0D, dd4 * d0 * 2.0D) / 3.0D + 3.0D + this.j.nextDouble() * 0.25D);
+                int i1 = (int) (this.o.a(surfaceX, surfaceZ) / 3.0D + 3.0D + this.j.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte b0 = biomebase.p;
                 byte b1 = biomebase.q;
@@ -171,68 +172,16 @@ public class ChunkProviderSky implements IChunkProvider {
 
         double d0 = 684.412D;
         double d1 = 684.412D;
-        double[] adouble1 = this.p.getWorldChunkManager().temperature;
-        double[] adouble2 = this.p.getWorldChunkManager().rain;
-
-        this.g = this.a.a(this.g, i, k, l, j1, 1.121D, 1.121D, 0.5D);
-        this.h = this.b.a(this.h, i, k, l, j1, 200.0D, 200.0D, 0.5D);
         d0 *= 2.0D;
         this.d = this.m.a(this.d, (double) i, (double) j, (double) k, l, i1, j1, d0 / 80.0D, d1 / 160.0D, d0 / 80.0D);
         this.e = this.k.a(this.e, (double) i, (double) j, (double) k, l, i1, j1, d0, d1, d0);
         this.f = this.l.a(this.f, (double) i, (double) j, (double) k, l, i1, j1, d0, d1, d0);
         int k1 = 0;
-        int l1 = 0;
-        int i2 = 16 / l;
 
         for (int j2 = 0; j2 < l; ++j2) {
-            int k2 = j2 * i2 + i2 / 2;
-
             for (int l2 = 0; l2 < j1; ++l2) {
-                int i3 = l2 * i2 + i2 / 2;
-                double d2 = adouble1[k2 * 16 + i3];
-                double d3 = adouble2[k2 * 16 + i3] * d2;
-                double d4 = 1.0D - d3;
-
-                d4 *= d4;
-                d4 *= d4;
-                d4 = 1.0D - d4;
-                double d5 = (this.g[l1] + 256.0D) / 512.0D;
-
-                d5 *= d4;
-                if (d5 > 1.0D) {
-                    d5 = 1.0D;
-                }
-
-                double d6 = this.h[l1] / 8000.0D;
-
-                if (d6 < 0.0D) {
-                    d6 = -d6 * 0.3D;
-                }
-
-                d6 = d6 * 3.0D - 2.0D;
-                if (d6 > 1.0D) {
-                    d6 = 1.0D;
-                }
-
-                d6 /= 8.0D;
-                d6 = 0.0D;
-                if (d5 < 0.0D) {
-                    d5 = 0.0D;
-                }
-
-                d5 += 0.5D;
-                d6 = d6 * (double) i1 / 16.0D;
-                ++l1;
-                double d7 = (double) i1 / 2.0D;
-
                 for (int j3 = 0; j3 < i1; ++j3) {
                     double d8 = 0.0D;
-                    double d9 = ((double) j3 - d7) * 8.0D / d5;
-
-                    if (d9 < 0.0D) {
-                        d9 *= -1.0D;
-                    }
-
                     double d10 = this.e[k1] / 512.0D;
                     double d11 = this.f[k1] / 512.0D;
                     double d12 = (this.d[k1] / 10.0D + 1.0D) / 2.0D;

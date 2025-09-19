@@ -6,15 +6,17 @@ public class MapGenCavesHell extends MapGenBase {
 
     public MapGenCavesHell() {}
 
-    protected void a(int i, int j, byte[] abyte, double d0, double d1, double d2) {
-        this.a(i, j, abyte, d0, d1, d2, 1.0F + this.b.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D, new Random(this.b.nextLong()));
+    protected void a(int i, int j, byte[] abyte, double d0, double d1, double d2, long seed) {
+        this.a(i, j, abyte, d0, d1, d2, 1.0F + this.b.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D, seed);
     }
 
-    protected void a(int i, int j, byte[] abyte, double d0, double d1, double d2, float f, float f1, float f2, int k, int l, double d3, Random random) {
+    protected void a(int i, int j, byte[] abyte, double d0, double d1, double d2, float f, float f1, float f2, int k, int l, double d3, long seed) {
         double d4 = (double) (i * 16 + 8);
         double d5 = (double) (j * 16 + 8);
         float f3 = 0.0F;
         float f4 = 0.0F;
+
+        Random random = new Random(seed);
 
         if (l <= 0) {
             int i1 = this.a * 16 - 16;
@@ -53,8 +55,8 @@ public class MapGenCavesHell extends MapGenBase {
             f4 += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2.0F;
             f3 += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4.0F;
             if (!flag && k == j1 && f > 1.0F) {
-                this.a(i, j, abyte, d0, d1, d2, random.nextFloat() * 0.5F + 0.5F, f1 - 1.5707964F, f2 / 3.0F, k, l, 1.0D, new Random(random.nextLong()));
-                this.a(i, j, abyte, d0, d1, d2, random.nextFloat() * 0.5F + 0.5F, f1 + 1.5707964F, f2 / 3.0F, k, l, 1.0D, new Random(random.nextLong()));
+                this.a(i, j, abyte, d0, d1, d2, random.nextFloat() * 0.5F + 0.5F, f1 - 1.5707964F, f2 / 3.0F, k, l, 1.0D, seed);
+                this.a(i, j, abyte, d0, d1, d2, random.nextFloat() * 0.5F + 0.5F, f1 + 1.5707964F, f2 / 3.0F, k, l, 1.0D, seed);
                 return;
             }
 
@@ -169,7 +171,7 @@ public class MapGenCavesHell extends MapGenBase {
             int k1 = 1;
 
             if (this.b.nextInt(4) == 0) {
-                this.a(k, l, abyte, d0, d1, d2);
+                this.a(k, l, abyte, d0, d1, d2, this.b.nextLong());
                 k1 += this.b.nextInt(4);
             }
 
@@ -178,7 +180,7 @@ public class MapGenCavesHell extends MapGenBase {
                 float f1 = (this.b.nextFloat() - 0.5F) * 2.0F / 8.0F;
                 float f2 = this.b.nextFloat() * 2.0F + this.b.nextFloat();
 
-                this.a(k, l, abyte, d0, d1, d2, f2 * 2.0F, f, f1, 0, 0, 0.5D, new Random(this.b.nextLong()));
+                this.a(k, l, abyte, d0, d1, d2, f2 * 2.0F, f, f1, 0, 0, 0.5D, this.b.nextLong());
             }
         }
     }
