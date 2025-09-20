@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.EntityType;
 
 public class CraftCreatureSpawner extends CraftBlockState implements CreatureSpawner {
     private final CraftWorld world;
@@ -36,6 +37,18 @@ public class CraftCreatureSpawner extends CraftBlockState implements CreatureSpa
             return;
         }
         spawner.mobName = type.getName();
+    }
+
+    public EntityType getSpawnedType() {
+        return EntityType.fromName(spawner.mobName);
+    }
+
+    public void setSpawnedType(EntityType creatureType) {
+        if (!creatureType.isAlive() || !creatureType.isSpawnable()) {
+            throw new IllegalArgumentException("Can't spawn non-living entities from mob spawners!");
+        }
+
+        spawner.mobName = creatureType.getName();
     }
 
     public int getDelay() {

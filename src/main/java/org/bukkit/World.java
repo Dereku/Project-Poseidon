@@ -312,6 +312,8 @@ public interface World {
      */
     public LivingEntity spawnCreature(Location loc, CreatureType type);
 
+    public LivingEntity spawnCreature(Location loc, EntityType type);
+
     /**
      * Strikes lightning at the given {@link Location}
      *

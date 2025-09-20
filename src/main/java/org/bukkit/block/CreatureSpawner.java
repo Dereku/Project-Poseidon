@@ -1,6 +1,7 @@
 package org.bukkit.block;
 
 import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.EntityType;
 
 /**
  * Represents a creature spawner.
@@ -37,6 +38,20 @@ public interface CreatureSpawner extends BlockState {
      * @param creatureType
      */
     public void setCreatureTypeId(String creatureType);
+
+    /**
+     * Get the spawner's creature type.
+     *
+     * @return The creature type.
+     */
+    public EntityType getSpawnedType();
+
+    /**
+     * Set the spawner's creature type.
+     *
+     * @param creatureType The creature type.
+     */
+    public void setSpawnedType(EntityType creatureType);
 
     /**
      * Get the spawner's delay.

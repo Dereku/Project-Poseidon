@@ -333,6 +333,16 @@ public class CraftWorld implements World {
         return creature;
     }
 
+    public LivingEntity spawnCreature(Location loc, EntityType creatureType) {
+        Entity result = spawn(loc, creatureType.getEntityClass());
+
+        if (result == null) {
+            return null;
+        }
+
+        return (LivingEntity) result;
+    }
+
     public LightningStrike strikeLightning(Location loc) {
         EntityWeatherStorm lightning = new EntityWeatherStorm(world, loc.getX(), loc.getY(), loc.getZ());
         world.strikeLightning(lightning);
