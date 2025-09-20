@@ -62,7 +62,7 @@ public class TextWrapper {
             }
 
             // Find the width
-            final int width = characterWidths[index];
+            final int width = characterWidths.length > index ? characterWidths[index] : 8;
 
             // See if we need a linebreak
             if (lineLength + 1 > CHAT_STRING_LENGTH || lineWidth + width >= CHAT_WINDOW_WIDTH) {
