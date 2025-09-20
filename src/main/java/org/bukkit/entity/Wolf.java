@@ -35,4 +35,7 @@ public interface Wolf extends Animals, Tameable {
      */
     public void setSitting(boolean sitting);
 
+    default EntityType getType() {
+        return EntityType.WOLF;
+    }
 }

@@ -350,4 +350,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
 
     public void sendPacket(final Player player, final Packet packet);
 
+    default EntityType getType() {
+        return EntityType.PLAYER;
+    }
 }

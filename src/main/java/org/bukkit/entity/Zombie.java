@@ -6,4 +6,9 @@ package org.bukkit.entity;
  * @author Cogito
  *
  */
-public interface Zombie extends Monster {}
+public interface Zombie extends Monster {
+
+    default EntityType getType() {
+        return EntityType.ZOMBIE;
+    }
+}

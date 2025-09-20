@@ -205,4 +205,8 @@ public interface LivingEntity extends Entity {
      */
     public void setNoDamageTicks(int ticks);
 
+    default EntityType getType() {
+        return EntityType.SKELETON;
+    }
+
 }

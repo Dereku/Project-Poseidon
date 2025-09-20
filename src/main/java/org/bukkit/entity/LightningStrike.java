@@ -14,4 +14,7 @@ public interface LightningStrike extends Weather {
      */
     public boolean isEffect();
 
+    default EntityType getType() {
+        return EntityType.LIGHTNING;
+    }
 }

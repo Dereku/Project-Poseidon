@@ -9,4 +9,9 @@ package org.bukkit.entity;
  * @author Cogito
  *
  */
-public interface Painting extends Entity {}
+public interface Painting extends Entity {
+
+    default EntityType getType() {
+        return EntityType.PAINTING;
+    }
+}

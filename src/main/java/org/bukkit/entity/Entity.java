@@ -172,4 +172,10 @@ public interface Entity {
      * @return unique id
      */
     public UUID getUniqueId();
+
+    /**
+     * Get the type of the entity.
+     * @return The entity type.
+     */
+    public EntityType getType();
 }

@@ -21,4 +21,8 @@ public interface Fireball extends Projectile, Explosive {
      */
     public Vector getDirection();
 
+    default EntityType getType() {
+        return EntityType.FIREBALL;
+    }
+
 }

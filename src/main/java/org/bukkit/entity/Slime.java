@@ -22,4 +22,8 @@ public interface Slime extends LivingEntity {
      * @param sz The new size of the slime.
      */
     public void setSize(int sz);
+
+    default EntityType getType() {
+        return EntityType.SLIME;
+    }
 }

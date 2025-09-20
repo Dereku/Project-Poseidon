@@ -31,4 +31,8 @@ public interface PigZombie extends Zombie {
      * @return True if the zombie is angry, otherwise false.
      */
     boolean isAngry();
+
+    default EntityType getType() {
+        return EntityType.PIG_ZOMBIE;
+    }
 }

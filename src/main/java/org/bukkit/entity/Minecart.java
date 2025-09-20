@@ -81,4 +81,8 @@ public interface Minecart extends Vehicle {
      * @param visible speed
      */
     public void setDerailedVelocityMod(Vector derailed);
+
+    default EntityType getType() {
+        return EntityType.MINECART;
+    }
 }

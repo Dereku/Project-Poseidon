@@ -15,4 +15,8 @@ public interface TNTPrimed extends Explosive {
      * @return the number of ticks until this TNTPrimed explodes
      */
     public int getFuseTicks();
+
+    default EntityType getType() {
+        return EntityType.PRIMED_TNT;
+    }
 }

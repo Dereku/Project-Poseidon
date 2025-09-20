@@ -23,4 +23,8 @@ public interface Item extends Entity {
      * @param stack
      */
     public void setItemStack(ItemStack stack);
+
+    default EntityType getType() {
+        return EntityType.DROPPED_ITEM;
+    }
 }

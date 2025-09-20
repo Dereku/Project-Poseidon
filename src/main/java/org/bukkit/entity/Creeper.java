@@ -18,4 +18,8 @@ public interface Creeper extends Monster {
      * @param value New Powered status
      */
     public void setPowered(boolean value);
+
+    default EntityType getType() {
+        return EntityType.CREEPER;
+    }
 }

@@ -20,4 +20,8 @@ public interface Boat extends Vehicle {
      * @param speed
      */
     public void setMaxSpeed(double speed);
+
+    default EntityType getType() {
+        return EntityType.BOAT;
+    }
 }

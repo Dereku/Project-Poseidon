@@ -24,4 +24,8 @@ public interface Sheep extends Animals, Colorable {
      * @param flag Whether to shear the sheep
      */
     public void setSheared(boolean flag);
+
+    default EntityType getType() {
+        return EntityType.SHEEP;
+    }
 }

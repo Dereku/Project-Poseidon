@@ -18,4 +18,8 @@ public interface Pig extends Animals, Vehicle {
      * @param saddled set if the pig has a saddle or not.
      */
     public void setSaddle(boolean saddled);
+
+    default EntityType getType() {
+        return EntityType.PIG;
+    }
 }
