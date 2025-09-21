@@ -71,7 +71,7 @@ public class BlockFlowing extends BlockFluids {
             if (this.a >= 2 && this.material == Material.WATER) {
                 if (world.getMaterial(i, j - 1, k).isBuildable()) {
                     i1 = 0;
-                } else if (world.getMaterial(i, j - 1, k) == this.material && world.getData(i, j, k) == 0) {
+                } else if (world.getMaterial(i, j - 1, k) == this.material && world.getData(i, j - 1, k) == 0) { // Water Spring Propagation Fix
                     i1 = 0;
                 }
             }
