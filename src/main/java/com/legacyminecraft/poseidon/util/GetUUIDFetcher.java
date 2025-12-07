@@ -6,8 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.nio.charset.Charset;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -36,12 +35,12 @@ public class GetUUIDFetcher {
 
 
     public static UUIDAndUsernameResult getUUID(String username) {
+        UUIDResult uuidResult;
         try {
             String url = PoseidonConfig.getInstance().getString("settings.uuid-fetcher.get.value", "https://api.minecraftservices.com/minecraft/profile/lookup/name/{username}");
             url = url.replace("{username}", encode(username));
 
             JSONObject jsonObject = readJsonFromUrl(url);
-            UUIDResult uuidResult;
             String returnedUsername = null;
 
             if (!jsonObject.containsKey("id")) {
@@ -59,16 +58,19 @@ public class GetUUIDFetcher {
             return new UUIDAndUsernameResult(uuidResult, returnedUsername);
 
         } catch (Exception exception) {
-            UUIDResult uuidResult = null;
-            if (exception == null || exception instanceof FileNotFoundException || exception.getMessage() == null) {
-                // This is a hacky solution to tell if the API is offline, or the user is cracked.
+            // This is a hacky solution to tell if the API is offline, or the user is cracked.
+            boolean networkFailure = exception instanceof UnknownHostException || exception instanceof ConnectException
+                    || exception instanceof FileNotFoundException || exception instanceof NoRouteToHostException
+                    || exception instanceof SocketTimeoutException;
+
+            if (System.getProperty("IKnowWhatImDoing") != null && networkFailure) {
                 uuidResult = new UUIDResult(generateOfflineUUID(username), UUIDResult.ReturnType.OFFLINE);
             } else {
                 uuidResult = new UUIDResult(null, UUIDResult.ReturnType.API_OFFLINE);
                 uuidResult.setException(exception);
             }
-            return new UUIDAndUsernameResult(uuidResult, null);
         }
+        return new UUIDAndUsernameResult(uuidResult, null);
     }
 
 

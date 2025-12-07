@@ -7,6 +7,11 @@ import com.projectposeidon.johnymuffin.LoginProcessHandler;
 import net.minecraft.server.Packet1Login;
 import org.bukkit.ChatColor;
 
+import java.io.FileNotFoundException;
+import java.net.ConnectException;
+import java.net.NoRouteToHostException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.UUID;
 
 import static com.legacyminecraft.poseidon.util.UUIDFetcher.getUUIDOf;
@@ -80,33 +85,40 @@ public class ThreadUUIDFetcher extends Thread {
         UUID uuid;
         try {
             uuid = getUUIDOf(loginPacket.name);
-            if (uuid == null) {
-                if (PoseidonConfig.getInstance().getConfigBoolean("settings.uuid-fetcher.allow-graceful-uuids.value", true)) {
-                    System.out.println("[Poseidon] " + loginPacket.name + " does not have a Mojang UUID associated with their name");
-                    UUID offlineUUID = generateOfflineUUID(loginPacket.name);
-                    loginProcessHandler.userUUIDReceived(offlineUUID, false);
-                    System.out.println("[Poseidon] Using Offline Based UUID for " + loginPacket.name + " - " + offlineUUID);
-                } else {
-                    System.out.println("[Poseidon] " + loginPacket.name + " does not have a UUID with Mojang. Player has been kicked as graceful UUID is disabled");
-                    loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we only support premium accounts");
-                }
-            } else {
-                System.out.println("[Poseidon] Fetched UUID from Mojang for " + loginPacket.name + " using POST - " + uuid.toString());
-                loginProcessHandler.userUUIDReceived(uuid, true);
-            }
         } catch (Exception e) {
+            boolean networkFailure = e instanceof UnknownHostException || e instanceof ConnectException
+                    || e instanceof FileNotFoundException || e instanceof NoRouteToHostException
+                    || e instanceof SocketTimeoutException;
+
             System.out.println("[Poseidon] Mojang failed contact for user " + loginPacket.name + ":");
 
             System.out.println("[Poseidon] If this issue persists, please utilize the GET method. Mojang's API frequently has issues with POST requests.");
             System.out.println("[Poseidon] You can do this by changing settings.uuid-fetcher.method.value to GET in the config");
 
-            e.printStackTrace();
-            loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
+            if (System.getProperty("IKnowWhatImDoing") != null && networkFailure) {
+                uuid = null;
+            } else {
+                e.printStackTrace();
+                loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
+                return;
+            }
         }
 
+        if (uuid == null) {
+            if (PoseidonConfig.getInstance().getConfigBoolean("settings.uuid-fetcher.allow-graceful-uuids.value", true)) {
+                System.out.println("[Poseidon] " + loginPacket.name + " does not have a Mojang UUID associated with their name");
+                UUID offlineUUID = generateOfflineUUID(loginPacket.name);
+                loginProcessHandler.userUUIDReceived(offlineUUID, false);
+                System.out.println("[Poseidon] Using Offline Based UUID for " + loginPacket.name + " - " + offlineUUID);
+            } else {
+                System.out.println("[Poseidon] " + loginPacket.name + " does not have a UUID with Mojang. Player has been kicked as graceful UUID is disabled");
+                loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we only support premium accounts");
+            }
+        } else {
+            System.out.println("[Poseidon] Fetched UUID from Mojang for " + loginPacket.name + " using POST - " + uuid);
+            loginProcessHandler.userUUIDReceived(uuid, true);
+        }
     }
-
-
 }
 
 

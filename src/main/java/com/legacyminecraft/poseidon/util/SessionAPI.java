@@ -48,6 +48,7 @@ public class SessionAPI
             callback.callback(response.getResponseCode(), res_username, res_uuid, res_ip);
         } catch (Exception ex) {
             System.out.println(String.format("Failed to authenticate session for '%s': %s", username, ex.getMessage()));
+            callback.callback(-1, username, null, null);
             // TODO: if debug, print the stack trace
         }
     }
