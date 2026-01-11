@@ -1748,7 +1748,7 @@ public class World implements IBlockAccess {
             boolean flag = false;
 
             if (this.allowMonsters && this.spawnMonsters >= 1) {
-                flag = SpawnerCreature.a(this, this.players);
+                flag = SpawnerCreature.spawnSleepThreats(this, this.players);
             }
 
             if (!flag) {
